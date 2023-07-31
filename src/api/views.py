@@ -1,8 +1,8 @@
 from django.conf import settings
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpRequest, JsonResponse
 
 
-def index_route(request: HttpResponse):
+def index_route(request: HttpRequest):
     """
     API index route. Returns API_NAME variable.
     """
