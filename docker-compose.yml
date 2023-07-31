@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  balancer:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - '8080:80'
+    restart: always
+
+  first:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8001
+    env_file:
+      - api.env
+    environment:
+      - API_NAME=first
+    expose:
+      - 8001
+    restart: always
+
+  second:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8002
+    env_file:
+      - api.env
+    environment:
+      - API_NAME=second
+    expose:
+      - 8002
+    restart: always
+
+  third:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8003
+    env_file:
+      - api.env
+    environment:
+      - API_NAME=third
+    expose:
+      - 8003
+    restart: always
